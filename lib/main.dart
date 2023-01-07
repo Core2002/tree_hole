@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 Future<MESSAGE> getMESSAGE() async {
   final response =
-      await http.get(Uri.parse('http://192.168.1.3:8080/api/get_message'));
+      await http.get(Uri.parse('http://192.168.1.3:8080/api/random'));
 
   if (response.statusCode == 200) {
     Utf8Decoder utf8decoder = const Utf8Decoder();
@@ -61,20 +61,25 @@ class MESSAGE {
 
   // {
   //   "_id": {
-  //     "$oid": "63b5ff6ec5234539a15bd81d"
+  //     "$oid": "63b9ee12872ed97633cbf622"
   //   },
   //   "hole": "core",
-  //   "message": "小白白",
-  //   "like": 6,
-  //   "time": "06点37分",
-  //   "ip": "127.0.0.1"
+  //   "message": "小白は可愛いですね",
+  //   "date": {
+  //     "$date": {
+  //       "$numberLong": "1673129490382"
+  //     }
+  //   },
+  //   "like": 233,
+  //   "ip": "127.0.0.1",
+  //   "_class": "fun.fifu.server.treehole.pojo.HoleMessage"
   // }
   factory MESSAGE.fromJson(Map<String, dynamic> json) {
     return MESSAGE(
       hole: json['hole'],
       message: json['message'],
       like: json['like'],
-      time: json['time'],
+      time: json['date'],
       ip: json['ip'],
     );
   }
