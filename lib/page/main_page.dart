@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tree_hole/widget/my_message_list.dart';
 
@@ -28,7 +29,10 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: "$_counter",
-        child: const Icon(Icons.add),
+        child: Transform.rotate(
+          angle: -90 * 3.1415926 / 180,
+          child: const Icon(CupertinoIcons.battery_full),
+        ),
       ),
     );
   }
