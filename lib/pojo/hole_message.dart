@@ -5,7 +5,7 @@ class HoleMessage {
   final String hole;
   final String message;
   final int like;
-  final int date;
+  final DateTime date;
   final String ip;
 
   const HoleMessage({
@@ -21,7 +21,7 @@ class HoleMessage {
       hole: json['hole'],
       message: json['message'],
       like: json['like'],
-      date: json['date'],
+      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
       ip: json['ip'],
     );
   }

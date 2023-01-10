@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tree_hole/widget/my_message_list.dart';
 
@@ -28,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const MyMessageList(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: "$_counter",
         child: const Icon(Icons.add),
       ),
     );

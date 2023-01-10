@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
 class MyCard extends StatelessWidget {
@@ -15,8 +16,10 @@ class MyCard extends StatelessWidget {
       future: futureMessage,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          var holeMessage= snapshot.data!;
+
           return Container(
-            height: 132,
+            // height: 132,
             padding: const EdgeInsets.all(18),
             margin: const EdgeInsets.fromLTRB(18, 6, 18, 6),
             decoration: const BoxDecoration(
@@ -31,7 +34,7 @@ class MyCard extends StatelessWidget {
               ],
             ),
             child: Text(
-              "${snapshot.data!.message}\n赞：${snapshot.data!.like}\nIP地址：${snapshot.data!.ip}",
+              "${holeMessage.message}\n赞：${holeMessage.like}\nIP地址：${holeMessage.ip}\n时间：${DateFormat("yyyy-MM-dd HH:ss").format(holeMessage.date)}",
               style: const TextStyle(
                 fontSize: 18,
               ),
