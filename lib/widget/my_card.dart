@@ -60,7 +60,7 @@ class MyCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () => _report(context, holeMessage),
                         mini: true,
                         tooltip: "ID：${holeMessage.id}\nIP地址：${holeMessage.ip}\n时间：${DateFormat("yyyy-MM-dd HH:ss").format(holeMessage.date)}",
                         child: const Icon(CupertinoIcons.exclamationmark_triangle),
@@ -77,6 +77,49 @@ class MyCard extends StatelessWidget {
         return const Padding(
           padding: EdgeInsets.symmetric(vertical: 32),
           child: Center(child: CircularProgressIndicator()),
+        );
+      },
+    );
+  }
+
+  void _report(BuildContext context, HoleMessage holeMessage) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('你确认要报告此消息吗'),
+          content: Text('内容：${holeMessage.message}'),
+          actions: [
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text('确认'),
+              onPressed: () {
+                Navigator.pop(context);
+                showCupertinoDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: const Text('报告完毕'),
+                      content: Text('消息ID：${holeMessage.id}'),
+                      actions: [
+                        TextButton(
+                          child: const Text('确认'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         );
       },
     );
