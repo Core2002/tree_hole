@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HoleMessage {
+  final String id;
   final String hole;
   final String message;
   final int like;
@@ -9,6 +10,7 @@ class HoleMessage {
   final String ip;
 
   const HoleMessage({
+    required this.id,
     required this.hole,
     required this.message,
     required this.like,
@@ -18,6 +20,7 @@ class HoleMessage {
 
   factory HoleMessage.fromJson(Map<String, dynamic> json) {
     return HoleMessage(
+      id: json['_id'],
       hole: json['hole'],
       message: json['message'],
       like: json['like'],
