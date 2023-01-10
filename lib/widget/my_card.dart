@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
@@ -16,11 +17,11 @@ class MyCard extends StatelessWidget {
       future: futureMessage,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var holeMessage= snapshot.data!;
+          var holeMessage = snapshot.data!;
 
           return Container(
             // height: 132,
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.fromLTRB(18, 3, 6, 3),
             margin: const EdgeInsets.fromLTRB(18, 6, 18, 6),
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 198, 228, 255),
@@ -33,11 +34,41 @@ class MyCard extends StatelessWidget {
                 )
               ],
             ),
-            child: Text(
-              "${holeMessage.message}\n赞：${holeMessage.like}\nIP地址：${holeMessage.ip}\n时间：${DateFormat("yyyy-MM-dd HH:ss").format(holeMessage.date)}",
-              style: const TextStyle(
-                fontSize: 18,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(holeMessage.message, style: const TextStyle(fontSize: 18)),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: FloatingActionButton(
+                        onPressed: () {},
+                        mini: true,
+                        tooltip: "❤ ${holeMessage.like}",
+                        child: const Icon(CupertinoIcons.heart),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: FloatingActionButton(
+                        onPressed: () {},
+                        mini: true,
+                        child: const Icon(CupertinoIcons.eye_slash),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: FloatingActionButton(
+                        onPressed: () {},
+                        mini: true,
+                        tooltip: "ID：${holeMessage.id}\nIP地址：${holeMessage.ip}\n时间：${DateFormat("yyyy-MM-dd HH:ss").format(holeMessage.date)}",
+                        child: const Icon(CupertinoIcons.exclamationmark_triangle),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         } else if (snapshot.hasError) {
