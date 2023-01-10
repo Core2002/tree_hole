@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tree_hole/my_message.dart';
+import 'package:tree_hole/pojo/hole_message.dart';
 
 class MyCard extends StatelessWidget {
   const MyCard({
@@ -7,11 +7,11 @@ class MyCard extends StatelessWidget {
     required this.futureMessage,
   });
 
-  final Future<MESSAGE> futureMessage;
+  final Future<HoleMessage> futureMessage;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<MESSAGE>(
+    return FutureBuilder<HoleMessage>(
       future: futureMessage,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -40,7 +40,10 @@ class MyCard extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
-        return const CircularProgressIndicator();
+        return const Padding(
+          padding: EdgeInsets.symmetric(vertical: 32),
+          child: Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }

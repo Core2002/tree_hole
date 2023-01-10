@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:tree_hole/hole_size.dart';
-import 'package:tree_hole/my_card.dart';
-import 'package:tree_hole/my_message.dart';
+import 'package:tree_hole/pojo/hole_size.dart';
+import 'package:tree_hole/widget/my_card.dart';
+import 'package:tree_hole/pojo/hole_message.dart';
 
 class MyMessageList extends StatelessWidget {
   const MyMessageList({
@@ -26,11 +26,8 @@ class MyMessageList extends StatelessWidget {
               cache[index] = getMESSAGE(index);
             }
 
-            var card = MyCard(futureMessage: cache[index]);
-            // print("index $index size $size");
-
             if (index < size) {
-              return card;
+              return MyCard(futureMessage: cache[index]);
             } else {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32),
