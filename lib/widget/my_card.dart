@@ -52,7 +52,7 @@ class MyCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () => _block(context, holeMessage),
                         mini: true,
                         child: const Icon(CupertinoIcons.eye_slash),
                       ),
@@ -105,6 +105,49 @@ class MyCard extends StatelessWidget {
                   builder: (context) {
                     return CupertinoAlertDialog(
                       title: const Text('报告完毕'),
+                      content: Text('消息ID：${holeMessage.id}'),
+                      actions: [
+                        TextButton(
+                          child: const Text('确认'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _block(BuildContext context, HoleMessage holeMessage) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('你确认要屏蔽此消息吗'),
+          content: Text('内容：${holeMessage.message}'),
+          actions: [
+            TextButton(
+              child: const Text('取消'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text('确认'),
+              onPressed: () {
+                Navigator.pop(context);
+                showCupertinoDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: const Text('已屏蔽'),
                       content: Text('消息ID：${holeMessage.id}'),
                       actions: [
                         TextButton(
