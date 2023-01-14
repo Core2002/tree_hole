@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tree_hole/pojo/hole_like.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
 class MyCard extends StatelessWidget {
@@ -43,7 +44,7 @@ class MyCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () => _like(context, holeMessage),
                         mini: true,
                         tooltip: "❤ ${holeMessage.like}",
                         child: const Icon(CupertinoIcons.heart),
@@ -78,6 +79,14 @@ class MyCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 32),
           child: Center(child: CircularProgressIndicator()),
         );
+      },
+    );
+  }
+
+  void _like(BuildContext context, HoleMessage holeMessage) {
+    likeHoleMessage(holeMessage).then(
+      (value) => {
+        if (value.ok > 0) {holeMessage.like++}
       },
     );
   }
