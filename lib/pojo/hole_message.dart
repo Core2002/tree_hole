@@ -5,11 +5,11 @@ class HoleMessage {
   final String id;
   final String hole;
   final String message;
-  final int like;
+  int like;
   final DateTime date;
   final String ip;
 
-  const HoleMessage({
+  HoleMessage({
     required this.id,
     required this.hole,
     required this.message,
