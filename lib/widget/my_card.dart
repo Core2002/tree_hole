@@ -4,18 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:tree_hole/pojo/hole_like.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
-class MyCard extends StatelessWidget {
-  const MyCard({
-    super.key,
-    required this.futureMessage,
-  });
-
+class MyCard extends StatefulWidget {
+  const MyCard({super.key, required this.futureMessage});
   final Future<HoleMessage> futureMessage;
 
   @override
+  State<MyCard> createState() => _MyCard();
+}
+
+class _MyCard extends State<MyCard> {
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<HoleMessage>(
-      future: futureMessage,
+      future: widget.futureMessage,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var holeMessage = snapshot.data!;
@@ -86,9 +87,12 @@ class MyCard extends StatelessWidget {
   void _like(BuildContext context, HoleMessage holeMessage) {
     likeHoleMessage(holeMessage).then(
       (value) => {
-        if (value.ok > 0) {holeMessage.like++}
+        if (value.ok <= 0) {holeMessage.like--}
       },
     );
+    setState(() {
+      holeMessage.like++;
+    });
   }
 
   void _report(BuildContext context, HoleMessage holeMessage) {
