@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:tree_hole/pojo/hole_like.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
+import '../pojo/hole_report.dart';
+
 class MyCard extends StatefulWidget {
   const MyCard({super.key, required this.futureMessage});
   final Future<HoleMessage> futureMessage;
@@ -123,6 +125,7 @@ class _MyCard extends State<MyCard> {
                         TextButton(
                           child: const Text('确认'),
                           onPressed: () {
+                            reportHoleMessage(holeMessage);
                             Navigator.pop(context);
                           },
                         ),
