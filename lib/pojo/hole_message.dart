@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class HoleMessage {
   final String id;
   final String hole;
-  final String message;
+  String message;
   int like;
   final DateTime date;
   final String ip;

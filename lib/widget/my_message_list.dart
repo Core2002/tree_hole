@@ -1,20 +1,27 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:tree_hole/pojo/hole_size.dart';
 import 'package:tree_hole/widget/my_card.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
-class MyMessageList extends StatelessWidget {
-  const MyMessageList({
-    super.key,
-  });
+class MyMessageList extends StatefulWidget {
+  const MyMessageList({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MyMessageList();
+  }
+}
+
+class _MyMessageList extends State {
+  Map<int, HoleMessage> cache = {};
+  var block = 0;
 
   @override
   Widget build(BuildContext context) {
-    var cache = {};
+    var size = 0;
     return FutureBuilder<HoleSize>(
       future: getHoleSize(),
       builder: (context, snapshot) {
-        var size = 0;
         if (snapshot.hasData) {
           size = snapshot.data!.size;
         }
@@ -22,23 +29,45 @@ class MyMessageList extends StatelessWidget {
         var listView = ListView.builder(
           itemCount: size + 1,
           itemBuilder: ((context, index) {
-            if (!cache.containsKey(index)) {
-              cache[index] = getMESSAGE(index);
-            }
-
-            if (index < size) {
-              return MyCard(futureMessage: cache[index]);
-            } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Center(
-                  child: Text(
-                    "加载完毕，共 $size 个",
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                ),
-              );
-            }
+            return FutureBuilder<HoleMessage>(
+              future: getMESSAGE(index),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (!cache.containsKey(index)) {
+                    cache[index] = snapshot.data!;
+                  }
+                  if (index < size) {
+                    if (cache[index]!.message != "") {
+                      return MyCard(
+                        holeMessage: cache[index]!,
+                        onRemove: () {
+                          setState(() {
+                            block++;
+                          });
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  } else {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 32),
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 32),
+                    child: Center(
+                      child: Text(
+                        "加载完毕，共 ${size - block} 个",
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                    ),
+                  );
+                }
+              },
+            );
           }),
         );
         return listView;
