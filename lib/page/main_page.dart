@@ -10,13 +10,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   void _incrementCounter() {
     Navigator.pushNamed(context, "/send_page");
-    setState(() {
-      _counter++;
-    });
   }
 
   @override
@@ -29,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const MyMessageList(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: "$_counter",
+        tooltip: "发送",
         child: Transform.rotate(
           angle: -90 * 3.1415926 / 180,
           child: const Icon(CupertinoIcons.battery_full),
