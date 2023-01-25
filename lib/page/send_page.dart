@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../pojo/resp_send_message.dart';
+
 class SendPage extends StatefulWidget {
   const SendPage({super.key, required this.title});
   final String title;
@@ -9,6 +11,7 @@ class SendPage extends StatefulWidget {
 }
 
 class _SendPageState extends State<SendPage> {
+  String message = "uninit";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +27,7 @@ class _SendPageState extends State<SendPage> {
               autofocus: true,
               maxLength: 150,
               maxLines: 6,
+              onChanged: (value) => message = value,
               decoration: InputDecoration(
                 labelText: "编辑",
                 hintText: "q(≧▽≦q)",
@@ -39,12 +43,37 @@ class _SendPageState extends State<SendPage> {
               child: ElevatedButton.icon(
                 icon: const Icon(CupertinoIcons.paperplane_fill),
                 label: const Text("发送"),
-                onPressed: () {},
+                onPressed: () => sendMessage(context),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void sendMessage(BuildContext context) {
+    HoleSendMessage(message);
+    if (message == "uninit") {
+      return;
+    }
+    Navigator.pop(context);
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('已提交'),
+          content: Text('信息已提交: $message'),
+          actions: [
+            TextButton(
+              child: const Text('确认'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
