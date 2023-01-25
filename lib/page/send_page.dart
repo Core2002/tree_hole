@@ -53,7 +53,7 @@ class _SendPageState extends State<SendPage> {
   }
 
   void sendMessage(BuildContext context) {
-    HoleSendMessage(message);
+    holeSendMessage(message);
     if (message == "uninit") {
       return;
     }

@@ -11,7 +11,7 @@ class RespSendMessage {
   }
 }
 
-Future<RespSendMessage> HoleSendMessage(String message) async {
+Future<RespSendMessage> holeSendMessage(String message) async {
   final resp = await http.get(Uri.parse('http://192.168.1.3:8080/api/add_hole_message/core/$message'));
   return RespSendMessage.fromJson(jsonDecode(resp.body));
 }
