@@ -74,8 +74,19 @@ class _MyMessageList extends State {
             );
           }),
         );
-        return listView;
+
+        return RefreshIndicator(
+          onRefresh: refresh,
+          child: listView,
+        );
       },
     );
+  }
+
+  Future refresh() async {
+    setState(() {
+      cache = {};
+      block = 0;
+    });
   }
 }
