@@ -20,7 +20,7 @@ class _MyCard extends State<MyCard> {
   Widget build(BuildContext context) {
     return Container(
       // height: 132,
-      padding: const EdgeInsets.fromLTRB(18, 3, 6, 3),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       margin: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 198, 228, 255),
@@ -36,7 +36,12 @@ class _MyCard extends State<MyCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.holeMessage.message, style: const TextStyle(fontSize: 18)),
+          Expanded(
+            child: Text(
+              widget.holeMessage.message,
+              style: const TextStyle(fontSize: 21),
+            ),
+          ),
           Column(
             children: [
               Padding(
