@@ -50,21 +50,25 @@ class _MyMessageList extends State {
                       return Container();
                     }
                   } else {
+                    return Container();
+                  }
+                } else {
+                  if (index == size) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32),
+                      child: Center(
+                        child: Text(
+                          "加载完毕，共 ${size - block} 个",
+                          style: const TextStyle(fontSize: 24),
+                        ),
+                      ),
+                    );
+                  } else {
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 32),
                       child: Center(child: CircularProgressIndicator()),
                     );
                   }
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 32),
-                    child: Center(
-                      child: Text(
-                        "加载完毕，共 ${size - block} 个",
-                        style: const TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  );
                 }
               },
             );
