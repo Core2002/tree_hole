@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../config/config.dart';
+
 class HoleMessage {
   final String id;
   final String hole;
@@ -32,7 +34,7 @@ class HoleMessage {
 
 Utf8Decoder utf8decoder = const Utf8Decoder();
 Future<HoleMessage> getMESSAGE(index) async {
-  final response = await http.get(Uri.parse('http://192.168.1.3:8080/api/read_index/core/$index'));
+  final response = await http.get(Uri.parse('${HoleConfig.getURL()}/api/read_index/core/$index'));
   if (response.statusCode == 200) {
     return HoleMessage.fromJson(jsonDecode(utf8decoder.convert(response.bodyBytes)));
   } else {

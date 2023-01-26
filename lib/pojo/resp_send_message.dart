@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../config/config.dart';
+
 class RespSendMessage {
   final int ok;
 
@@ -12,6 +14,6 @@ class RespSendMessage {
 }
 
 Future<RespSendMessage> holeSendMessage(String message) async {
-  final resp = await http.get(Uri.parse('http://192.168.1.3:8080/api/add_hole_message/core/$message'));
+  final resp = await http.get(Uri.parse('${HoleConfig.getURL()}/api/add_hole_message/core/$message'));
   return RespSendMessage.fromJson(jsonDecode(resp.body));
 }
