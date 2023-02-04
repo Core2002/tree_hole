@@ -30,6 +30,7 @@ class MyMessageList extends StatefulWidget {
 
 class _MyMessageList extends State {
   Map<int, HoleMessage> cache = {};
+  Set<String> hide = {};
   var block = 0;
 
   @override
@@ -63,7 +64,7 @@ class _MyMessageList extends State {
                         },
                       );
                     } else {
-                      block++;
+                      hide.add(cache[index]!.id);
                       return Container();
                     }
                   } else if (index == size) {
@@ -71,17 +72,20 @@ class _MyMessageList extends State {
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Center(
                         child: Text(
-                          "加载完毕，共 ${size - block} 个",
+                          "加载完毕，共 ${size - block - hide.length} 个",
                           style: const TextStyle(fontSize: 24),
                         ),
                       ),
                     );
+                  } else {
+                    return Container();
                   }
+                } else {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
                 }
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32),
-                  child: Center(child: CircularProgressIndicator()),
-                );
               },
             );
           }),
@@ -97,7 +101,8 @@ class _MyMessageList extends State {
 
   Future refresh() async {
     setState(() {
-      cache = {};
+      cache.clear();
+      hide.clear();
       block = 0;
     });
   }
