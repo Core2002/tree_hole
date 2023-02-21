@@ -68,12 +68,12 @@ class _MyMessageList extends State {
                       return Container();
                     }
                   } else if (index == size) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 32),
                       child: Center(
                         child: Text(
-                          "加载完毕，共 ${size - block - hide.length} 个",
-                          style: const TextStyle(fontSize: 24),
+                          "加载完毕",
+                          style: TextStyle(fontSize: 24),
                         ),
                       ),
                     );
