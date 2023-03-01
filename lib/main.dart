@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tree Hole',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.teal),
       routes: {
         "/": (context) => const MyHomePage(title: '树洞'),
         "/send_page":(context) => const SendPage(title: '发布'),

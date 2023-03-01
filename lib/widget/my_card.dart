@@ -39,13 +39,13 @@ class _MyCard extends State<MyCard> {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       margin: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 198, 228, 255),
+        color: Color.fromARGB(255, 242, 249, 248),
         borderRadius: BorderRadius.all(Radius.circular(18)),
         boxShadow: [
           BoxShadow(
-            blurRadius: 2,
-            offset: Offset(0, 2),
-            color: Colors.blue,
+            blurRadius: 1,
+            offset: Offset(0, 1),
+            color: Colors.grey,
           )
         ],
       ),
@@ -66,7 +66,10 @@ class _MyCard extends State<MyCard> {
                   onPressed: () => _like(context, widget.holeMessage),
                   mini: true,
                   tooltip: "❤ ${widget.holeMessage.like}",
-                  child: const Icon(CupertinoIcons.heart),
+                  child: const Icon(
+                    CupertinoIcons.heart,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Padding(
@@ -74,7 +77,10 @@ class _MyCard extends State<MyCard> {
                 child: FloatingActionButton(
                   onPressed: () => _block(context, widget.holeMessage),
                   mini: true,
-                  child: const Icon(CupertinoIcons.eye_slash),
+                  child: const Icon(
+                    CupertinoIcons.eye_slash,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Padding(
@@ -83,7 +89,10 @@ class _MyCard extends State<MyCard> {
                   onPressed: () => _report(context, widget.holeMessage),
                   mini: true,
                   tooltip: "ID：${widget.holeMessage.id}\nIP地址：${widget.holeMessage.ip}\n时间：${DateFormat("yyyy-MM-dd HH:ss").format(widget.holeMessage.date)}",
-                  child: const Icon(CupertinoIcons.exclamationmark_triangle),
+                  child: const Icon(
+                    CupertinoIcons.exclamationmark_triangle,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
