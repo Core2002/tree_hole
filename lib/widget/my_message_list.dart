@@ -20,7 +20,7 @@ import 'package:tree_hole/widget/my_card.dart';
 import 'package:tree_hole/pojo/hole_message.dart';
 
 class MyMessageList extends StatefulWidget {
-  const MyMessageList({super.key});
+  const MyMessageList({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -28,30 +28,65 @@ class MyMessageList extends StatefulWidget {
   }
 }
 
-class _MyMessageList extends State {
+class _MyMessageList extends State<MyMessageList> {
   Map<int, HoleMessage> cache = {};
   Set<String> hide = {};
   var block = 0;
 
+  Future<HoleSize> _holeSizeFuture = getHoleSize();
+
+  Future<void> _refresh() async {
+    setState(() {
+      cache.clear();
+      hide.clear();
+      block = 0;
+      _holeSizeFuture = getHoleSize();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = 0;
     return FutureBuilder<HoleSize>(
-      future: getHoleSize(),
+      future: _holeSizeFuture,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          size = snapshot.data!.size;
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('加载失败'));
+        } else if (!snapshot.hasData) {
+          return const Center(child: Text('没有数据'));
         }
 
-        var listView = ListView.builder(
-          itemCount: size + 1,
-          itemBuilder: ((context, index) {
-            return FutureBuilder<HoleMessage>(
-              future: getMESSAGE(index),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
+        final size = snapshot.data!.size;
+
+        return RefreshIndicator(
+          onRefresh: _refresh,
+          child: ListView.builder(
+            itemCount: size + 1,
+            itemBuilder: ((context, index) {
+              return FutureBuilder<HoleMessage>(
+                future: myGetMESSAGE(index),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox(
+                      height: 132,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const SizedBox(
+                      height: 132,
+                      child: Center(child: Text('加载失败')),
+                    );
+                  } else if (!snapshot.hasData) {
+                    return const SizedBox(
+                      height: 132,
+                      child: Center(child: Text('没有数据')),
+                    );
+                  }
+
+                  final holeMessage = snapshot.data!;
                   if (!cache.containsKey(index)) {
-                    cache[index] = snapshot.data!;
+                    cache[index] = holeMessage;
                   }
                   if (index < size) {
                     if (cache[index]!.message != "") {
@@ -80,30 +115,19 @@ class _MyMessageList extends State {
                   } else {
                     return Container();
                   }
-                } else {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 32),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-              },
-            );
-          }),
-        );
-
-        return RefreshIndicator(
-          onRefresh: refresh,
-          child: listView,
+                },
+              );
+            }),
+          ),
         );
       },
     );
   }
 
-  Future refresh() async {
-    setState(() {
-      cache.clear();
-      hide.clear();
-      block = 0;
-    });
+  Future<HoleMessage> myGetMESSAGE(int index) async {
+    if (cache.containsKey(index)) {
+      return cache[index]!;
+    }
+    return getMESSAGE(index);
   }
 }
